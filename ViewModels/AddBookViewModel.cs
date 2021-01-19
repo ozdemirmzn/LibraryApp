@@ -16,6 +16,7 @@ namespace LibraryApp.ViewModels
 
 
         [Required(ErrorMessage = "ISBN is required")]
-        public int ISBN { get; set; }
+        [StringLength(20, MinimumLength =4, ErrorMessage ="ISBN needs to be at least 4 characters.")]
+        public string ISBN { get; set; }
     }
 }

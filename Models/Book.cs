@@ -13,13 +13,13 @@ namespace LibraryApp.Models
 
         public int Id { get; set; }
 
-        public int ISBN { get; set; }
+        public string ISBN { get; set; }
 
         public Book()
         {
         }
 
-        public Book(string name, string description, int isbn)
+        public Book(string name, string description, string isbn)
         {
             Name = name;
             Description = description;
