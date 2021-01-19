@@ -1,6 +1,7 @@
 using LibraryApp.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,8 +26,14 @@ namespace LibraryApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<BookDbContext>(options =>
-      options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+
+            /*services.AddDbContext<BookDbContext>(options =>
+      options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));*/
+            services.AddRazorPages();
+
+            services.Configure<IdentityOptions>(options =>
+  options.Password.RequiredLength = 8
+);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +51,8 @@ namespace LibraryApp
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -51,6 +60,7 @@ namespace LibraryApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

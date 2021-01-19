@@ -6,9 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryApp.Controllers
 {
+    [Authorize]
     public class BookController : Controller
     {
         private BookDbContext context;
@@ -18,6 +20,7 @@ namespace LibraryApp.Controllers
             context = dbContext;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             List<Book> books = context.Books.ToList();
