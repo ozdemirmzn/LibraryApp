@@ -12,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace LibraryApp
 {
@@ -80,11 +82,21 @@ namespace LibraryApp
             }
             app.UseStaticFiles();
 
+            //Fix login issue Exception: Correlation failed
+            //an error was encountered while handling remote login(google facebook)
+            //samesite cookies
+
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Lax });
+
             app.UseRouting();
+
+            app.UseCookiePolicy();
 
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            
 
             app.UseEndpoints(endpoints =>
             {
