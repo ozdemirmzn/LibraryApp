@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LibraryApp.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,5 +20,28 @@ namespace LibraryApp.ViewModels
         [Required(ErrorMessage = "ISBN is required")]
         [StringLength(20, MinimumLength =4, ErrorMessage ="ISBN needs to be at least 4 characters.")]
         public string ISBN { get; set; }
+
+        public Category Category { get; set; }
+
+        
+
+        public List<SelectListItem> Categories { get; set; } = new List<SelectListItem>
+        {
+            new SelectListItem(Category.Art.ToString(), ((int)Category.Art).ToString()),
+            new SelectListItem(Category.Biography.ToString(), ((int)Category.Biography).ToString()),
+            new SelectListItem(Category.Business.ToString(), ((int)Category.Business).ToString()),
+            new SelectListItem(Category.Comics.ToString(), ((int)Category.Comics).ToString()),
+            new SelectListItem(Category.Tech.ToString(), ((int)Category.Tech).ToString()),
+            new SelectListItem(Category.Cooking.ToString(), ((int)Category.Cooking).ToString()),
+            new SelectListItem(Category.Education.ToString(), ((int)Category.Education).ToString()),
+            new SelectListItem(Category.History.ToString(), ((int)Category.History).ToString()),
+            new SelectListItem(Category.Kids.ToString(), ((int)Category.Kids).ToString()),
+            new SelectListItem(Category.Literature.ToString(), ((int)Category.Literature).ToString()),
+            new SelectListItem(Category.Medical.ToString(), ((int)Category.Medical).ToString()),
+            new SelectListItem(Category.ScienceFi.ToString(), ((int)Category.ScienceFi).ToString()),
+            new SelectListItem(Category.Travel.ToString(), ((int)Category.Travel).ToString()),
+        };
+
+        
     }
 }

@@ -15,16 +15,35 @@ namespace LibraryApp.Models
 
         public string ISBN { get; set; }
 
+        public string BarcodeNum { get; set; }
+        
+
+
+        public Category Category { get; set; }
+        
+
         public Book()
         {
+            BarcodeNum = GenerateBarcodeNum();     
         }
 
-        public Book(string name, string description, string isbn)
+        public Book(string name, string description, string isbn) : this()
         {
             Name = name;
             Description = description;
             ISBN = isbn;
-            
         }
+
+        
+        private String GenerateBarcodeNum()
+        {
+            string generateBarcodeNum = "9";
+            Random rnd = new Random();
+            int randomNum = rnd.Next(10000000, 90000000);
+            return generateBarcodeNum + randomNum;
+        }
+
     }
+
+    
 }

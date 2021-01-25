@@ -25,6 +25,8 @@ namespace LibraryApp.Controllers
         {
             List<Book> books = context.Books.ToList();
             return View(books);
+
+
         }
 
         public IActionResult Add()
@@ -42,8 +44,12 @@ namespace LibraryApp.Controllers
                 {
                     Name = addBookViewModel.Name,
                     Description = addBookViewModel.Description,
-                    ISBN = addBookViewModel.ISBN
+                    ISBN = addBookViewModel.ISBN,
+                    Category = addBookViewModel.Category,
+                    
                 };
+
+               // newBook.BarcodeNum = newBook.BarcodeNum;
                 context.Books.Add(newBook);
                 context.SaveChanges();
 
