@@ -43,11 +43,14 @@ namespace LibraryApp.Controllers
             }
             else
             {
-                    books = context.Books
+                    /*books = context.Books
                         .Where(j => j.Name == searchTerm)
+                        .ToList();*/
+                books = context.Books
+                        .Where(j => j.Name.IndexOf(searchTerm) >= 0)
                         .ToList();
 
-                    foreach (Book book in books)
+                foreach (Book book in books)
                     {
                         BookDetailViewModel newDisplayBook = new BookDetailViewModel(book);
                         displayBooks.Add(newDisplayBook);
