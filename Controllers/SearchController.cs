@@ -47,7 +47,7 @@ namespace LibraryApp.Controllers
                         .Where(j => j.Name == searchTerm)
                         .ToList();*/
                 books = context.Books
-                        .Where(j => j.Name.IndexOf(searchTerm) >= 0)
+                        .Where(j => j.Name.ToLower().IndexOf(searchTerm.ToLower()) >= 0)
                         .ToList();
 
                 foreach (Book book in books)
