@@ -1,0 +1,38 @@
+﻿<div class="container body-content">
+
+    <form asp-controller="Search" asp-action="Results" method="post">
+ 
+        <div class="form-group">
+            <label class="font-weight-bold" for="searchTerm">Keyword:</label>
+            <input class="form-control" type="text" name="searchTerm" id="searchTerm" placeholder="Please type the full book name..."/>
+        </div>
+
+        <input class="btn btn-primary btn-lg" type="submit" value="Search" />
+    </form>
+
+    <hr />
+
+    @if (ViewBag.books != null)
+    {
+        <table class="table table-striped thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Barcode Number</th>
+            </tr>
+
+            @foreach (var book in ViewBag.books)
+            {
+        <tr>
+            <td> @book.Name</td>
+            <td> @book.Description</td>
+            <td> @book.BarcodeNum</td>
+            
+        </tr>
+            }
+        </table>
+    }
+
+
+</div>
+

@@ -45,7 +45,7 @@ namespace LibraryApp.Controllers
                     Name = addBookViewModel.Name,
                     Description = addBookViewModel.Description,
                     ISBN = addBookViewModel.ISBN,
-                    Category = addBookViewModel.Category,
+                    Category = addBookViewModel.Category
                     
                 };
 
