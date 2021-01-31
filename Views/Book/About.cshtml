@@ -19,3 +19,46 @@
     </tr>
 
 </table>
+<div class="form-group">
+    <h3>Library Location</h3>
+    <br />
+    <p class="font-weight-bold">@Model.LibraryAddressStreet, @Model.LibraryAddressCity, @Model.LibraryAddressState @Model.LibraryAddressZip</p>
+</div>
+    <div class="container" id="GoogleMaps" style="width:100%;height:400px;"></div>
+
+
+    <script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById("GoogleMaps"), {
+                zoom: 8,
+                center: { lat: -34.397, lng: 150.644 },
+            });
+            const geocoder = new google.maps.Geocoder();
+            geocodeAddress(geocoder, map);
+
+        }
+
+        function geocodeAddress(geocoder, resultsMap) {
+            const address = '@Model.LibraryAddressStreet,@Model.LibraryAddressCity,@Model.LibraryAddressState,@Model.LibraryAddressZip';
+            geocoder.geocode({ address: address }, (results, status) => {
+                if (status === "OK") {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location,
+                        label: "@Model.Name",
+                    });
+                } else {
+                    alert(
+                        "Geocode was not successful for the following reason: " + status
+                    );
+                }
+            });
+        }
+    </script>
+
+    <script defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqXHMNoJJwES8K9SkbOgKejtmsH52QlYo&callback=initMap&libraries=&v=weekly">
+    </script>
+
+

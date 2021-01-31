@@ -20,6 +20,19 @@ namespace LibraryApp.ViewModels
         [Required(ErrorMessage = "ISBN is required")]
         [StringLength(20, MinimumLength =4, ErrorMessage ="ISBN needs to be at least 4 characters.")]
         public string ISBN { get; set; }
+      
+        [Required(ErrorMessage = "Street is required")]
+        public string LibraryAddressStreet { get; set; }
+      
+        [Required(ErrorMessage = "City is required")]
+        public string LibraryAddressCity { get; set; }
+      
+        [Required(ErrorMessage = "State is required")]
+        public string LibraryAddressState { get; set; }
+     
+        [Required(ErrorMessage = "ZipCode is required")]
+        public string LibraryAddressZip { get; set; }
+
 
         public Category Category { get; set; }
 

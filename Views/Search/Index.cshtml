@@ -17,16 +17,16 @@
         <table class="table table-striped thead-dark">
             <tr>
                 <th>Name</th>
-                <th>Description</th>
                 <th>Barcode Number</th>
+                <th>Library Address</th>
             </tr>
 
             @foreach (var book in ViewBag.books)
             {
         <tr>
-            <td> @book.Name</td>
-            <td> @book.Description</td>
+            <td> <a asp-controller="Book" asp-action="About" asp-route-id="@book.Id">@book.Name</a></td>
             <td> @book.BarcodeNum</td>
+            <td> @book.LibraryAddressStreet, @book.LibraryAddressCity, @book.LibraryAddressState @book.LibraryAddressZip</td>
             
         </tr>
             }

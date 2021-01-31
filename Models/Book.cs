@@ -16,7 +16,12 @@ namespace LibraryApp.Models
         public string ISBN { get; set; }
 
         public string BarcodeNum { get; set; }
-        
+
+        public string LibraryAddressStreet { get; set; }
+        public string LibraryAddressCity { get; set; }
+        public string LibraryAddressState { get; set; }
+        public string LibraryAddressZip { get; set; }
+
 
 
         public Category Category { get; set; }
@@ -27,11 +32,15 @@ namespace LibraryApp.Models
             BarcodeNum = GenerateBarcodeNum();     
         }
 
-        public Book(string name, string description, string isbn) : this()
+        public Book(string name, string description, string isbn, string address, string city, string state, string zip) : this()
         {
             Name = name;
             Description = description;
             ISBN = isbn;
+            LibraryAddressStreet = address;
+            LibraryAddressCity = city;
+            LibraryAddressState = state;
+            LibraryAddressZip = zip;
         }
 
         
