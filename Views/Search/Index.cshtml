@@ -1,6 +1,6 @@
 ﻿<div class="container body-content">
 
-    <form asp-controller="Search" asp-action="Results" method="post">
+   @* <form asp-controller="Search" asp-action="Results" method="post">
  
         <div class="form-group">
             <label class="font-weight-bold" for="searchTerm">Keyword:</label>
@@ -8,8 +8,8 @@
         </div>
 
         <input class="btn btn-primary btn-lg" type="submit" value="Search" />
-    </form>
-
+    </form>*@
+    <h2>Search Results:</h2>
     <hr />
 
     @if (ViewBag.books != null)

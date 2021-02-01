@@ -1,0 +1,55 @@
+﻿@using LibraryApp.ViewModels;
+@model AddBookViewModel;
+
+<div class="container body-content">
+
+    <form asp-controller="Sort" asp-action="Sorted" method="post">
+
+        <div class="form-row">
+            <select class="col-md-4" name="category" id="categoty">
+                <option value="0">Art</option>
+                <option value="1">Biography</option>
+                <option value="2">Business</option>
+                <option value="3">Comics</option>
+                <option value="4">Tech</option>
+                <option value="5">Cooking</option>
+                <option value="6">Education</option>
+                <option value="7">History</option>
+                <option value="8">Kids</option>
+                <option value="9">Literature</option>
+                <option value="10">Medical</option>
+                <option value="11">ScienceFi</option>
+                <option value="12">Travel</option>
+            </select>
+            <input class="btn btn-primary" type="submit" value="Apply" />
+        </div>
+    </form>
+    <h2>Filtered by Category:</h2>
+    <hr />
+
+    @if (ViewBag.books != null)
+    {
+        <table class="table table-striped thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Barcode Number</th>
+                <th>Library Address</th>
+            </tr>
+
+            @foreach (var book in ViewBag.books)
+            {
+                <tr>
+                    <td> <a asp-controller="Book" asp-action="About" asp-route-id="@book.Id">@book.Name</a></td>
+                    <td> @book.BarcodeNum</td>
+                    <td> @book.LibraryAddressStreet, @book.LibraryAddressCity, @book.LibraryAddressState @book.LibraryAddressZip</td>
+                </tr>
+            }
+        </table>
+    }
+    else 
+    { 
+       <p>No books available in this categoty!</p>
+    }
+
+
+</div>

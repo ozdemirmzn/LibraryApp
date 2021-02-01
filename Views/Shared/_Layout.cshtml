@@ -6,12 +6,15 @@
     <title>@ViewData["Title"] - LibraryApp</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css" integrity="sha512-sopmFEmRVsWt542K+yzH3FQ1KJfdosOJG+bGLs9ZJT07b/3gUxRA9ICuJg2JtoZ9WeknAUuwJ0ggnmrV1YL6kQ==" crossorigin="anonymous" />
+
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LibraryApp</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,17 +22,33 @@
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Index">Available Books</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Index">Inventory</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="Index">Search Books</a>
-                        </li>
+
                         <li class="nav-item">
 
                             <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Add">Add a Book</a>
 
                         </li>
+                        <li class="nav-item">
 
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Sort" asp-action="index">Filter</a>
+
+                        </li>
+
+
+
+                    </ul>
+                    <ul class="navbar-nav align-content-center">
+                        <li class="nav-item">
+                            <form asp-controller="Search" asp-action="Results" method="post">
+                                <div class="form-row">
+                                    <input type="text" name="searchTerm" id="searchTerm" placeholder="Book name..." />
+                                    <input class="btn btn-info btn-sm" type="submit" value="Search" />
+                                </div>
+                            </form>
+                            @* <a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="Index">Search Books</a>*@
+                        </li>
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -55,6 +74,14 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @*Extra bootstrap features*@
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+
+    @*Font Awesome*@
+    <script src="https://kit.fontawesome.com/c2fbc04410.js" crossorigin="anonymous"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
