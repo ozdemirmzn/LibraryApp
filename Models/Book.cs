@@ -24,7 +24,7 @@ namespace LibraryApp.Models
 
 
 
-        public Category Category { get; set; }
+        public string Category { get; set; }
         
 
         public Book()

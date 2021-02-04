@@ -28,11 +28,11 @@ namespace LibraryApp.Controllers
         {
             List<Book> books = new List<Book>();
             List<BookDetailViewModel> displayBooks = new List<BookDetailViewModel>();
-            switch (category)
+            /*switch (category)
             {
                 case 0:
                     books = context.Books
-                        .Where(js => js.Category == Category.Art)
+                        .Where(js => js.Category == Category.Art.ToString())
                     .ToList();
 
                     foreach (var book in books)
@@ -43,7 +43,7 @@ namespace LibraryApp.Controllers
                     break;
                 case 1:
                     books = context.Books
-                        .Where(js => js.Category == Category.Biography)
+                        .Where(js => js.Category == Category.Biography.ToString())
                     .ToList();
 
                     foreach (var book in books)
@@ -54,7 +54,7 @@ namespace LibraryApp.Controllers
                     break;
                 case 2:
                     books = context.Books
-                        .Where(js => js.Category == Category.Business)
+                        .Where(js => js.Category == Category.Business.ToString())
                     .ToList();
 
                     foreach (var book in books)
@@ -65,7 +65,7 @@ namespace LibraryApp.Controllers
                     break;
                 case 3:
                     books = context.Books
-                        .Where(js => js.Category == Category.Comics)
+                        .Where(js => js.Category == Category.Comics.ToString())
                     .ToList();
 
                     foreach (var book in books)
@@ -76,7 +76,7 @@ namespace LibraryApp.Controllers
                     break;
                 case 4:
                     books = context.Books
-                        .Where(js => js.Category == Category.Tech)
+                        .Where(js => js.Category == Category.Tech.ToString())
                     .ToList();
 
                     foreach (var book in books)
@@ -87,7 +87,7 @@ namespace LibraryApp.Controllers
                     break;
                 case 5:
                     books = context.Books
-                        .Where(js => js.Category == Category.Cooking)
+                        .Where(js => js.Category == Category.Cooking.ToString())
                     .ToList();
 
                     foreach (var book in books)
@@ -98,7 +98,7 @@ namespace LibraryApp.Controllers
                     break;
                 case 6:
                     books = context.Books
-                        .Where(js => js.Category == Category.Education)
+                        .Where(js => js.Category == Category.Education.ToString())
                     .ToList();
 
                     foreach (var book in books)
@@ -109,7 +109,7 @@ namespace LibraryApp.Controllers
                     break;
                 case 7:
                     books = context.Books
-                        .Where(js => js.Category == Category.History)
+                        .Where(js => js.Category == Category.History.ToString())
                     .ToList();
 
                     foreach (var book in books)
@@ -120,7 +120,7 @@ namespace LibraryApp.Controllers
                     break;
                 case 8:
                     books = context.Books
-                        .Where(js => js.Category == Category.Kids)
+                        .Where(js => js.Category == Category.Kids.ToString())
                     .ToList();
 
                     foreach (var book in books)
@@ -131,7 +131,7 @@ namespace LibraryApp.Controllers
                     break;
                 case 9:
                     books = context.Books
-                        .Where(js => js.Category == Category.Literature)
+                        .Where(js => js.Category == Category.Literature.ToString())
                     .ToList();
 
                     foreach (var book in books)
@@ -142,7 +142,7 @@ namespace LibraryApp.Controllers
                     break;
                 case 10:
                     books = context.Books
-                        .Where(js => js.Category == Category.Medical)
+                        .Where(js => js.Category == Category.Medical.ToString())
                     .ToList();
 
                     foreach (var book in books)
@@ -153,7 +153,7 @@ namespace LibraryApp.Controllers
                     break;
                 case 11:
                     books = context.Books
-                        .Where(js => js.Category == Category.ScienceFi)
+                        .Where(js => js.Category == Category.ScienceFi.ToString())
                     .ToList();
 
                     foreach (var book in books)
@@ -164,7 +164,7 @@ namespace LibraryApp.Controllers
                     break;
                 case 12:
                     books = context.Books
-                        .Where(js => js.Category == Category.Travel)
+                        .Where(js => js.Category == Category.Travel.ToString())
                     .ToList();
 
                     foreach (var book in books)
@@ -173,7 +173,17 @@ namespace LibraryApp.Controllers
                         displayBooks.Add(newDisplayBook);
                     }
                     break;
+            }*/
+
+            books = context.Books
+            .Where(js => js.Category == Enum.GetName(typeof(Category), category))
+        .ToList();
+            foreach (var book in books)
+            {
+                BookDetailViewModel newDisplayBook = new BookDetailViewModel(book);
+                displayBooks.Add(newDisplayBook);
             }
+
             ViewBag.books = displayBooks;
 
 

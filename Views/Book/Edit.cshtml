@@ -1,0 +1,54 @@
+﻿
+@using LibraryApp.ViewModels;
+@model AddBookViewModel;
+
+<h1>Update the book information</h1>
+
+<form asp-controller="Book" asp-action="ProcessEdit" method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="@Model.Id" />
+        <input type="hidden" asp-for="@Model.BarcodeNum" />
+        <label>Book Name</label>
+        <input class="form-control" asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class="form-group">
+        <label>Book Description</label>
+        <input class="form-control" asp-for="Description" />
+        <span asp-validation-for="Description"></span>
+    </div>
+    <div class="form-group">
+        <label>ISBN</label>
+        <input class="form-control" asp-for="ISBN" />
+        <span asp-validation-for="ISBN"></span>
+    </div>
+    <div class="form-group">
+        <label>Category</label>
+        <select class="form-control" asp-for="Category" asp-items="Model.Categories"></select>
+    </div>
+    <div class="form-group">
+        <h2>Library Location</h2>
+    </div>
+    <div class="form-group">
+        <label>Address</label>
+        <input class="form-control" asp-for="LibraryAddressStreet" />
+        <span asp-validation-for="LibraryAddressStreet"></span>
+    </div>
+    <div class="form-group">
+        <label>City</label>
+        <input class="form-control" asp-for="LibraryAddressCity" />
+        <span asp-validation-for="LibraryAddressCity"></span>
+    </div>
+    <div class="form-group">
+        <label>State</label>
+        <input class="form-control" asp-for="LibraryAddressState" />
+        <span asp-validation-for="LibraryAddressState"></span>
+    </div>
+    <div class="form-group">
+        <label>Zip Code</label>
+        <input class="form-control" asp-for="LibraryAddressZip" />
+        <span asp-validation-for="LibraryAddressZip"></span>
+    </div>
+
+    <input type="submit" value="Save" />
+</form>

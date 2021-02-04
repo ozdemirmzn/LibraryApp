@@ -10,6 +10,9 @@ namespace LibraryApp.ViewModels
 {
     public class AddBookViewModel
     {
+        public int Id { get; set; }
+        public string BarcodeNum { get; set; }
+
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
 
