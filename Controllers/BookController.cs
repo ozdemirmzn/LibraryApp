@@ -96,6 +96,8 @@ namespace LibraryApp.Controllers
                 Name = theBook.Name,
                 Description = theBook.Description,
                 ISBN = theBook.ISBN,
+                BarcodeNum = theBook.BarcodeNum,
+                //converts string to enum
                 Category = (Category)Enum.Parse(typeof(Category), theBook.Category, true),
                 LibraryAddressStreet = theBook.LibraryAddressStreet,
                 LibraryAddressCity = theBook.LibraryAddressCity,
