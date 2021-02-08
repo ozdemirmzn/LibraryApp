@@ -3,7 +3,7 @@
 
 <h1>Add New Book to Inventory</h1>
 
-<form asp-controller="Book" asp-action="ProcessAddBookForm" method="post">
+<form enctype="multipart/form-data" asp-controller="Book" asp-action="ProcessAddBookForm" method="post">
     <div class="form-group">
         <label>Book Name</label>
         <input class="form-control" asp-for="Name" placeholder="Book Name Here..." />
@@ -23,6 +23,31 @@
         <label>Category</label>
         <select class="form-control" asp-for="Category" asp-items="Model.Categories"></select>
     </div>
+    <div class="form-group">
+        <label asp-for="Photo"></label>
+        <div class="form-row">
+            <div class="custom-file">
+                <input asp-for="Photo" class="form-control custom-file-input">
+                <label class="custom-file-label">Choose File...</label>
+            </div>
+        </div>
+    </div>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+
+    @*This script is required to display the selected file in the file upload element*@
+
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                $('.custom-file-input').on("change", function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).next('.custom-file-label').html(fileName);
+                });
+            });
+        </script>
+    }
     <div class="form-group">
         <h2>Library Location</h2>
     </div>

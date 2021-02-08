@@ -7,7 +7,6 @@
 <form asp-controller="Book" asp-action="ProcessEdit" method="post">
     <div class="form-group">
         <input type="hidden" asp-for="@Model.Id" />
-        <input type="hidden" asp-for="@Model.BarcodeNum" />
         <label>Book Name</label>
         <input class="form-control" asp-for="Name" />
         <span asp-validation-for="Name"></span>

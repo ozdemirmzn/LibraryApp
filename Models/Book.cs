@@ -22,6 +22,8 @@ namespace LibraryApp.Models
         public string LibraryAddressState { get; set; }
         public string LibraryAddressZip { get; set; }
 
+        public string PhotoPath { get; set; }
+
 
 
         public string Category { get; set; }

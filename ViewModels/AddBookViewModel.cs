@@ -1,4 +1,5 @@
 ﻿using LibraryApp.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace LibraryApp.ViewModels
         [Required(ErrorMessage = "ZipCode is required")]
         public string LibraryAddressZip { get; set; }
 
-
+        public IFormFile Photo { get; set; }
         public Category Category { get; set; }
 
         

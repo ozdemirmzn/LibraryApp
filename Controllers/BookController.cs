@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
+using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.AspNetCore.Hosting;
 
 namespace LibraryApp.Controllers
 {
@@ -14,10 +17,13 @@ namespace LibraryApp.Controllers
     public class BookController : Controller
     {
         private BookDbContext context;
+        
+        private readonly IHostingEnvironment hostingEnvironment;
 
-        public BookController(BookDbContext dbContext)
+        public BookController(BookDbContext dbContext, IHostingEnvironment hostingEnvironment)
         {
             context = dbContext;
+            this.hostingEnvironment = hostingEnvironment;
         }
 
         [AllowAnonymous]
@@ -40,6 +46,23 @@ namespace LibraryApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                string uniqueFileName = null;
+
+                if (addBookViewModel.Photo != null)
+                {
+                    // The image must be uploaded to the images folder in wwwroot
+                    // To get the path of the wwwroot folder we are using the inject
+                    // HostingEnvironment service provided by ASP.NET Core
+                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                    // To make sure the file name is unique we are appending a new
+                    // GUID value and and an underscore to the file name
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + addBookViewModel.Photo.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    // Use CopyTo() method provided by IFormFile interface to
+                    // copy the file to wwwroot/images folder
+                    addBookViewModel.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+
                 Book newBook = new Book
                 {
                     Name = addBookViewModel.Name,
@@ -49,8 +72,9 @@ namespace LibraryApp.Controllers
                     LibraryAddressStreet =addBookViewModel.LibraryAddressStreet,
                     LibraryAddressCity = addBookViewModel.LibraryAddressCity,
                     LibraryAddressState = addBookViewModel.LibraryAddressState,
-                    LibraryAddressZip = addBookViewModel.LibraryAddressZip
-                    
+                    LibraryAddressZip = addBookViewModel.LibraryAddressZip,
+                    PhotoPath = uniqueFileName
+
                 };
 
                // newBook.BarcodeNum = newBook.BarcodeNum;
@@ -89,14 +113,13 @@ namespace LibraryApp.Controllers
         
         public IActionResult Edit(int id)
         {
-            Book theBook = context.Books
-                .Single(e => e.Id == id);
-            AddBookViewModel book = new AddBookViewModel 
-            {
+            Book theBook = context.Books.Find(id);
+            AddBookViewModel book = new AddBookViewModel
+            { 
+                Id = theBook.Id,
                 Name = theBook.Name,
                 Description = theBook.Description,
                 ISBN = theBook.ISBN,
-                BarcodeNum = theBook.BarcodeNum,
                 //converts string to enum
                 Category = (Category)Enum.Parse(typeof(Category), theBook.Category, true),
                 LibraryAddressStreet = theBook.LibraryAddressStreet,
@@ -109,22 +132,20 @@ namespace LibraryApp.Controllers
         }
 
         [HttpPost("/Edit")]
-        public IActionResult ProcessEdit(AddBookViewModel book)
+        public IActionResult ProcessEdit(AddBookViewModel addBookViewModel)
         {
-            Book updatedBook = new Book
-            {
-                Id = book.Id,
-                BarcodeNum = book.BarcodeNum,
-                Name = book.Name,
-                Description = book.Description,
-                ISBN = book.ISBN,
-                Category = book.Category.ToString(),
-                LibraryAddressStreet = book.LibraryAddressStreet,
-                LibraryAddressCity = book.LibraryAddressCity,
-                LibraryAddressState = book.LibraryAddressState,
-                LibraryAddressZip = book.LibraryAddressZip
-            };
-            context.Books.Update(updatedBook);
+            Book theBook = context.Books.Find(addBookViewModel.Id);
+
+            theBook.Name = addBookViewModel.Name;
+            theBook.Description = addBookViewModel.Description;
+            theBook.ISBN = addBookViewModel.ISBN;
+            theBook.Category = addBookViewModel.Category.ToString();
+            theBook.LibraryAddressStreet = addBookViewModel.LibraryAddressStreet;
+            theBook.LibraryAddressCity = addBookViewModel.LibraryAddressCity;
+            theBook.LibraryAddressState = addBookViewModel.LibraryAddressState;
+            theBook.LibraryAddressZip = addBookViewModel.LibraryAddressZip;
+                    
+            context.Books.Update(theBook);
             context.SaveChanges();
 
             return Redirect("/book");
