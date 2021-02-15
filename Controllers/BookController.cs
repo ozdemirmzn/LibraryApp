@@ -17,7 +17,9 @@ namespace LibraryApp.Controllers
     public class BookController : Controller
     {
         private BookDbContext context;
-        
+
+        //https://csharp-video-tutorials.blogspot.com/2019/05/file-upload-in-aspnet-core-mvc.html
+        //https://www.youtube.com/watch?v=aoxEJii70_I&t=514s
         private readonly IHostingEnvironment hostingEnvironment;
 
         public BookController(BookDbContext dbContext, IHostingEnvironment hostingEnvironment)
@@ -73,6 +75,8 @@ namespace LibraryApp.Controllers
                     LibraryAddressCity = addBookViewModel.LibraryAddressCity,
                     LibraryAddressState = addBookViewModel.LibraryAddressState,
                     LibraryAddressZip = addBookViewModel.LibraryAddressZip,
+                    Latitude = addBookViewModel.Latitude,
+                    Longitude = addBookViewModel.Longitude,
                     PhotoPath = uniqueFileName
 
                 };
@@ -144,6 +148,8 @@ namespace LibraryApp.Controllers
             theBook.LibraryAddressCity = addBookViewModel.LibraryAddressCity;
             theBook.LibraryAddressState = addBookViewModel.LibraryAddressState;
             theBook.LibraryAddressZip = addBookViewModel.LibraryAddressZip;
+            theBook.Longitude = addBookViewModel.Longitude;
+            theBook.Latitude = addBookViewModel.Latitude;
                     
             context.Books.Update(theBook);
             context.SaveChanges();

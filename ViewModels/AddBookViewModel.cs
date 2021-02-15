@@ -37,6 +37,10 @@ namespace LibraryApp.ViewModels
         [Required(ErrorMessage = "ZipCode is required")]
         public string LibraryAddressZip { get; set; }
 
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
+
         public IFormFile Photo { get; set; }
         public Category Category { get; set; }
 

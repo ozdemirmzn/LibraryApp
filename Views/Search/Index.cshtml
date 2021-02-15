@@ -1,14 +1,6 @@
-﻿<div class="container body-content">
-
-   @* <form asp-controller="Search" asp-action="Results" method="post">
- 
-        <div class="form-group">
-            <label class="font-weight-bold" for="searchTerm">Keyword:</label>
-            <input class="form-control" type="text" name="searchTerm" id="searchTerm" placeholder="Please enter part of the book name..."/>
-        </div>
-
-        <input class="btn btn-primary btn-lg" type="submit" value="Search" />
-    </form>*@
+﻿@*@using LibraryApp.Models
+    @model List<Book>*@
+<div class="container body-content">
     <h2>Search Results:</h2>
     <hr />
 
@@ -23,16 +15,49 @@
 
             @foreach (var book in ViewBag.books)
             {
-        <tr>
-            <td> <a asp-controller="Book" asp-action="About" asp-route-id="@book.Id">@book.Name</a></td>
-            <td> @book.BarcodeNum</td>
-            <td> @book.LibraryAddressStreet, @book.LibraryAddressCity, @book.LibraryAddressState @book.LibraryAddressZip</td>
-            
-        </tr>
+                <tr>
+                    <td> <a asp-controller="Book" asp-action="About" asp-route-id="@book.Id">@book.Name</a></td>
+                    <td> @book.BarcodeNum</td>
+                    <td> @book.LibraryAddressStreet, @book.LibraryAddressCity, @book.LibraryAddressState @book.LibraryAddressZip</td>
+
+                </tr>
+
+
             }
         </table>
+
     }
 
 
 </div>
+
+@*<div id="GoogleMaps" style="width:50%;height:400px;"></div>
+
+    <script>
+            function initMap() {
+                var bounds = new google.maps.LatLngBounds();
+                const map = new google.maps.Map(document.getElementById("GoogleMaps"), {
+                    zoom: 10,
+                    center: { lat: 39.0997, lng: -94.5786  },
+                });
+
+            @foreach (var item in ViewBag.books)
+            {
+                    <text>
+                var marker = new google.maps.Marker({
+                    position: { lat: @item.Latitude, lng: @item.Longitude },
+                    map: map,
+                    label:"@item.Name",
+                });
+                bounds.extend({ lat: @item.Latitude, lng: @item.Longitude });
+                    </text>
+                }
+                map.fitBounds(bounds);
+            }
+    </script>
+
+    <script defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDU_bII886jEHcp57DpGeS1uCJTaWaROWc&callback=initMap&libraries=&v=weekly">
+    </script>*@
+
 

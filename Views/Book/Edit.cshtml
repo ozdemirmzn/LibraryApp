@@ -28,26 +28,130 @@
     <div class="form-group">
         <h2>Library Location</h2>
     </div>
-    <div class="form-group">
-        <label>Address</label>
-        <input class="form-control" asp-for="LibraryAddressStreet" />
-        <span asp-validation-for="LibraryAddressStreet"></span>
-    </div>
-    <div class="form-group">
-        <label>City</label>
-        <input class="form-control" asp-for="LibraryAddressCity" />
-        <span asp-validation-for="LibraryAddressCity"></span>
-    </div>
-    <div class="form-group">
-        <label>State</label>
-        <input class="form-control" asp-for="LibraryAddressState" />
-        <span asp-validation-for="LibraryAddressState"></span>
-    </div>
-    <div class="form-group">
-        <label>Zip Code</label>
-        <input class="form-control" asp-for="LibraryAddressZip" />
-        <span asp-validation-for="LibraryAddressZip"></span>
+    <div class="form-group" id="locationField">
+        <label>Library Address</label>
+        <input class="form-control" id="autocomplete" placeholder="Start typing your address" type="text" />
     </div>
 
-    <input type="submit" value="Save" />
+    <div class="form-group">
+        <label asp-for="LibraryAddressStreet">Street</label>
+        <input class="form-control" id="street_number" asp-for="LibraryAddressStreet" type="text" />
+        <span asp-validation-for="LibraryAddressStreet"></span>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="LibraryAddressCity">City</label>
+            <input class="form-control" id="locality" asp-for="LibraryAddressCity" type="text"/>
+            <span asp-validation-for="LibraryAddressCity"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="LibraryAddressState">State</label>
+            <input class="form-control" id="administrative_area_level_1" asp-for="LibraryAddressState" type="text" />
+            <span asp-validation-for="LibraryAddressState"></span>
+        </div>
+        <div class="form-group col-md-2">
+            <label asp-for="LibraryAddressZip">Zip Code</label>
+            <input class="form-control" id="postal_code" asp-for="LibraryAddressZip" type="text"  />
+            <span asp-validation-for="LibraryAddressZip"></span>
+        </div>
+    </div>
+
+    <input type="hidden" id="latitude" asp-for="Latitude">
+    <input type="hidden" id="longitude" asp-for="Longitude">
+
+    <input type="submit" value="Submit" />
 </form>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDU_bII886jEHcp57DpGeS1uCJTaWaROWc&callback=initAutocomplete&libraries=places&v=weekly"
+        defer></script>
+<script>
+    let placeSearch;
+    let autocomplete;
+    const componentForm = {
+        street_number: "short_name",
+        route: "long_name",
+        locality: "long_name",
+        administrative_area_level_1: "short_name",
+        postal_code: "short_name",
+    };
+    function initAutocomplete() {
+        // Create the autocomplete object, restricting the search predictions to
+        // geographical location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById("autocomplete"),
+            { types: ["geocode"] }
+        );
+        // Avoid paying for data that you don't need by restricting the set of
+        // place fields that are returned to just the address components.
+        autocomplete.setFields(["address_component"]);
+        // When the user selects an address from the drop-down, populate the
+        // address fields in the form.
+        autocomplete.addListener("place_changed", fillInAddress);
+    }
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        const place = autocomplete.getPlace();
+        initMap();
+        for (const component in componentForm) {
+            if (component != "route") { // street_number and route fields are combined into one field, street. So they don't need to be cleared out
+                document.getElementById(component).value = ""; //clear out the input fields
+                document.getElementById(component).disabled = false; //street field is editable after autofill
+            }
+        }
+        // Get each component of the address from the place details,
+        // and then fill-in the corresponding field on the form.
+        for (const component of place.address_components) {
+            const addressType = component.types[0];
+            if (componentForm[addressType]) {
+                let val = component[componentForm[addressType]];
+                if (addressType == "street_number") {
+                    document.getElementById("street_number").value = val;
+                }
+                else if (addressType == "route") {
+                    document.getElementById("street_number").value += " " + val;
+                }
+                else {
+                    document.getElementById(addressType).value = val;
+                }
+            }
+        }
+    }
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 8,
+            center: { lat: -34.397, lng: 150.644 },
+        });
+        const geocoder = new google.maps.Geocoder();
+        geocodeAddress(geocoder, map);
+    }
+    function geocodeAddress(geocoder, resultsMap) {
+        const address = document.getElementById("autocomplete").value;
+        geocoder.geocode({ address: address }, (results, status) => {
+            if (status === "OK") {
+                resultsMap.setCenter(results[0].geometry.location);
+                new google.maps.Marker({
+                    map: resultsMap,
+                    position: results[0].geometry.location,
+                });
+                var lng = results[0].geometry.location.lng();
+                var lat = results[0].geometry.location.lat();
+                @*console.log(lng);
+                console.log(lat);*@
+                //Reset Latitude and Longitude information in the form to ensure data integrity
+                document.getElementById("latitude").value = "";
+                document.getElementById("longitude").value = "";
+                //Save Latitude and Longitude information to the form input element to be saved in the database
+                document.getElementById("latitude").value = lat;
+                document.getElementById("longitude").value = lng;
+            } else {
+                alert(
+                    "Geocode was not successful for the following reason: " + status
+                );
+            }
+        });
+    }
+</script>
+<div id="map">
+</div>
