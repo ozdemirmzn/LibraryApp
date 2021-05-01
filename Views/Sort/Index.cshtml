@@ -1,12 +1,11 @@
-﻿@using LibraryApp.ViewModels;
-@model AddBookViewModel;
+﻿
 
 <div class="container body-content">
 
     <form asp-controller="Sort" asp-action="Sorted" method="post">
 
         <div class="form-row">
-            <select class="col-md-4" name="category" id="categoty">
+            <select class="col-md-4" name="category" id="category">
                 <option value="0">Art</option>
                 <option value="1">Biography</option>
                 <option value="2">Business</option>
@@ -21,9 +20,14 @@
                 <option value="11">ScienceFi</option>
                 <option value="12">Travel</option>
             </select>
+
             <input class="btn btn-primary" type="submit" value="Apply" />
+
         </div>
     </form>
+    @*<script type="text/javascript">
+            document.getElementById('category').value = "<?php echo $_GET['category'];?>";
+        </script>*@
     <h2>Filtered by Category:</h2>
     <hr />
 
@@ -46,10 +50,44 @@
             }
         </table>
     }
-    else 
-    { 
-       <p>No books available in this categoty!</p>
+    else
+    {
+        <p>No books available in this categoty!</p>
     }
 
 
 </div>
+
+<div id="GoogleMaps" style="width:100%;height:400px;"></div>
+
+@if (ViewBag.books != null)
+{
+<script>
+
+        function initMap() {
+                    var bounds = new google.maps.LatLngBounds();
+                    const map = new google.maps.Map(document.getElementById("GoogleMaps"), {
+                        zoom: 8,
+                        center: { lat: 39.0997, lng: -94.5786  },
+                    });
+
+
+                @foreach (var item in ViewBag.books)
+                {
+                        <text>
+                    var marker = new google.maps.Marker({
+                        position: { lat: @item.Latitude, lng: @item.Longitude },
+                        map: map,
+                        label:"@item.Name",
+                    });
+                    bounds.extend({ lat: @item.Latitude, lng: @item.Longitude });
+                        </text>
+                }
+            map.fitBounds(bounds);
+        }
+
+</script>
+}
+<script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDU_bII886jEHcp57DpGeS1uCJTaWaROWc&callback=initMap&libraries=&v=weekly">
+</script>

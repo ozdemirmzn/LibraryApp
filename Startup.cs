@@ -39,7 +39,7 @@ namespace LibraryApp
             // using WebPWrecover.Services;
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
-
+           
             services.AddRazorPages();
 
             services.Configure<IdentityOptions>(options =>

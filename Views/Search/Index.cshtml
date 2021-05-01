@@ -31,13 +31,15 @@
 
 </div>
 
-@*<div id="GoogleMaps" style="width:50%;height:400px;"></div>
+<div id="GoogleMaps" style="width:100%;height:400px;"></div>
 
-    <script>
+@if (ViewBag.books != null)
+{
+<script>
             function initMap() {
                 var bounds = new google.maps.LatLngBounds();
                 const map = new google.maps.Map(document.getElementById("GoogleMaps"), {
-                    zoom: 10,
+                    zoom: 8,
                     center: { lat: 39.0997, lng: -94.5786  },
                 });
 
@@ -51,13 +53,14 @@
                 });
                 bounds.extend({ lat: @item.Latitude, lng: @item.Longitude });
                     </text>
-                }
+            }
                 map.fitBounds(bounds);
             }
-    </script>
+</script>
+}
 
-    <script defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDU_bII886jEHcp57DpGeS1uCJTaWaROWc&callback=initMap&libraries=&v=weekly">
-    </script>*@
+<script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDU_bII886jEHcp57DpGeS1uCJTaWaROWc&callback=initMap&libraries=&v=weekly">
+</script>
 
 

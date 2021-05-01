@@ -1,6 +1,7 @@
 ﻿using LibraryApp.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,6 +17,13 @@ namespace LibraryApp.ViewModels
         public string LibraryAddressCity { get; set; }
         public string LibraryAddressState { get; set; }
         public string LibraryAddressZip { get; set; }
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
+
+        
+
+        
 
         public BookDetailViewModel(Book theBook)
         {
@@ -27,6 +35,9 @@ namespace LibraryApp.ViewModels
             LibraryAddressCity = theBook.LibraryAddressCity;
             LibraryAddressState = theBook.LibraryAddressState;
             LibraryAddressZip = theBook.LibraryAddressZip;
+            Latitude = theBook.Latitude;
+            Longitude = theBook.Longitude;
+            
         }
     }
 }

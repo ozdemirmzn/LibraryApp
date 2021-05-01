@@ -26,11 +26,7 @@ namespace LibraryApp.Models
 
         public double Longitude { get; set; }
 
-        private const double homeLatitude = 39.0997;
-
-        private const double homeLongitude = -94.5786;
-        public double HomeLatitude { get { return homeLatitude; } }
-        public double HomeLongitude { get { return homeLongitude; } }
+        
 
         public string PhotoPath { get; set; }
 

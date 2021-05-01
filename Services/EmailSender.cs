@@ -18,9 +18,9 @@ namespace LibraryApp.Services
 
         public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
 
-        public Task SendEmailAsync(string email, string subject, string message)
+        public async Task SendEmailAsync(string email, string subject, string message)
         {
-            return Execute(Options.SendGridKey, subject, message, email);
+            await Execute(Options.SendGridKey, subject, message, email);
         }
 
         public Task Execute(string apiKey, string subject, string message, string email)
@@ -28,7 +28,7 @@ namespace LibraryApp.Services
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("libraryappdemo@mail.com", Options.SendGridUser),
+                From = new EmailAddress("libraryappdemo@mail.com", Options.SenderName),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
