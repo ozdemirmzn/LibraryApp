@@ -3,6 +3,10 @@
     "mssql1": {
       "type": "mssql",
       "connectionId": "LibraryAppContextConnection"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "AzureDbConnection"
     }
   }
 }

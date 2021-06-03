@@ -32,6 +32,18 @@ namespace LibraryApp
             services.AddControllersWithViews();
 
             /*services.AddDbContext<BookDbContext>(options =>
+           options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));*/
+
+            services.AddDbContext<BookDbContext>(options =>
+             options.UseSqlServer(Configuration.GetConnectionString("AzureDbConnection")));
+
+
+
+            services.AddDefaultIdentity<IdentityUser>(options => 
+            options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<BookDbContext>();
+
+            /*services.AddDbContext<BookDbContext>(options =>
       options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));*/
 
             // requires
